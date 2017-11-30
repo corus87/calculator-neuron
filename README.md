@@ -25,8 +25,8 @@ kalliope install --git-url https://github.com/corus87/calculator-neuron
 | solution     | Returns the solution of the given operation  | string | 5      |
 
 ## Notes
-Only one operation is possible.
-Not all STT engines return integers! 
+- Only one operation is possible.
+- Not all STT engines return integers! 
 
 ## Synapses example
 ```

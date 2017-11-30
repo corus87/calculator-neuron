@@ -1,7 +1,7 @@
 # Calculator
-Simple calculator neuron for Kalliope
-## Synopsis
+Calculator neuron for Kalliope
 
+## Synopsis
 Calculate simple operations
 
 ## Installation
@@ -11,23 +11,22 @@ kalliope install --git-url https://github.com/corus87/calculator-neuron
 
 ## Options
 
-| Parameter   | Required | Choice  | Default | 
-|-------------|----------|---------|---------|
-| variable_1  | yes      | integer |         | 
-| variable_2  | yes      | integer |         | 
-| add         | yes      | boolean | False   | 
-| subtract    | yes      | boolean | False   | 
-| multiply    | yes      | boolean | False   | 
-| divide      | yes      | boolean | False   | 
+| Parameter   | Required | Choices                          |
+|-------------|----------|---------------------------------|
+| variable_1  | yes      | integer                         |
+| variable_2  | yes      | integer                         |
+| operator    | yes      | add, subtract, multiply, divide |
+
 
 ## Return values
 
 | Name         | Description                                  | Type   | Sample |
 |--------------|----------------------------------------------|--------|--------|
-| Solution     | Returns the solution of the givven operation | string | 5      |
+| solution     | Returns the solution of the given operation  | string | 5      |
 
-## Note
+## Notes
 Only one operation is possible.
+Not all STT engines return integers! 
 
 ## Synapses example
 ```
@@ -39,7 +38,7 @@ Only one operation is possible.
       - calculator:
           variable_1: "{{ var1 }}"
           variable_2: "{{ var2 }}"
-          add: True
+          operator: "add"
           say_template: "The solution is {{ solution }}"
 
   - name: "calculate-subtract"
@@ -50,7 +49,7 @@ Only one operation is possible.
       - calculator:
           variable_1: "{{ var1 }}"
           variable_2: "{{ var2 }}"
-          subtract: True
+          operator: "subtract"
           say_template: "The solution is {{ solution }}"
   
   - name: "calculate-multiply"
@@ -61,18 +60,18 @@ Only one operation is possible.
       - calculator:
           variable_1: "{{ var1 }}"
           variable_2: "{{ var2 }}"
-          multiply: True
+          operator: "multiply"
           say_template: "The solution is {{ solution }}"
   
   - name: "calculate-divide"
     signals:
       - order: "calculate {{ var1 }} / {{ var2 }}"
-      - order: "calculate {{ var1 }} divided by {{ var2 }}"
+      - order: "calculate {{ var1 }} divide by {{ var2 }}"
     neurons:
       - calculator:
           variable_1: "{{ var1 }}"
           variable_2: "{{ var2 }}"
-          divide: True
+          operator: "divide"
           say_template: "The solution is {{ solution }}"
 ```
 

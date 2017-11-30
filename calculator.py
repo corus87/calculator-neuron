@@ -14,30 +14,22 @@ class Calculator(NeuronModule):
         # the args from the neuron configuration
         self.variable_1 = kwargs.get('variable_1', None)
         self.variable_2 = kwargs.get('variable_2', None)
-        self.add = kwargs.get('add', False)       
-        self.subtract = kwargs.get('subtract', False)
-        self.multiply = kwargs.get('multiply', False)
-        self.divide = kwargs.get('divide', False)
-
-        self.operators = [self.add, self.subtract, self.multiply, self.divide]
+        self.operator = kwargs.get('operator', None)
         
         # check if parameters have been provided
         if self._is_parameters_ok():
             def calculate(x,y):
                 x = int(x)
                 y = int(y)
-                if self.add:
+                if "add" == self.operator:
                     solution = x + y
-                
-                if self.subtract:
+                elif "subtract" == self.operator:
                     solution = x - y     
-                    
-                if self.multiply:
+                elif "multiply" == self.operator:   
                     solution = x * y
-                
-                if self.divide:
+                elif "divide" == self.operator:
                     solution = x / y
-    
+
                 solution = (("%.1f" % solution)).rstrip('0').rstrip('.')
                 return solution
 
@@ -66,11 +58,12 @@ class Calculator(NeuronModule):
         else:
             raise MissingParameterException("[Calculator] Variable_2 is missing")
         
-        if sum(self.operators) == 0:
-            raise MissingParameterException("[Calculator] You have to set an operator")
-        
-        if sum(self.operators) > 1:
-            raise MissingParameterException("[Calculator] You can only set one operator")
+        if self.operator:
+            operators = ["add", "subtract", "multiply", "divide"]
+            if self.operator not in operators:
+                raise MissingParameterException("[Calculator] %s is not a valid operator" % self.operator)
+        else:
+            raise MissingParameterException("[Calculator] You have to set a valid operator")
         
 
         return True
